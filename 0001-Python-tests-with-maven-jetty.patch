@@ -1,0 +1,248 @@
+From d17eacd2738a965909db2ed4200b0c7c533cf28e Mon Sep 17 00:00:00 2001
+From: Shraddha Chauhan <shraddha.chauhan@freestoneinfotech.com>
+Date: Tue, 9 Feb 2021 11:13:59 +0530
+Subject: [PATCH] Python tests with maven jetty
+
+---
+ intg/src/test/python/test_admin.py        | 19 +++++++++++++++++++
+ intg/src/test/python/test_discovery.py    | 18 ++++++++++++++++++
+ intg/src/test/python/test_entity.py       | 19 +++++++++++++++++++
+ intg/src/test/python/test_glossary.py     | 19 +++++++++++++++++++
+ intg/src/test/python/test_lineage.py      | 19 +++++++++++++++++++
+ intg/src/test/python/test_relationship.py | 19 +++++++++++++++++++
+ intg/src/test/python/test_typedef.py      | 19 +++++++++++++++++++
+ webapp/pom.xml                            | 18 +++++++++++++++---
+ 8 files changed, 147 insertions(+), 3 deletions(-)
+
+diff --git a/intg/src/test/python/test_admin.py b/intg/src/test/python/test_admin.py
+index f9af73e02..31ea936c5 100644
+--- a/intg/src/test/python/test_admin.py
++++ b/intg/src/test/python/test_admin.py
+@@ -1,3 +1,22 @@
++#!/usr/bin/env/python
++
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ import time
+ import uuid
+ import pytest
+diff --git a/intg/src/test/python/test_discovery.py b/intg/src/test/python/test_discovery.py
+index 2c2345a3b..9e1610fbe 100644
+--- a/intg/src/test/python/test_discovery.py
++++ b/intg/src/test/python/test_discovery.py
+@@ -1,3 +1,21 @@
++#!/usr/bin/env/python
++
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
+ import time
+ import uuid
+ import pytest
+diff --git a/intg/src/test/python/test_entity.py b/intg/src/test/python/test_entity.py
+index cd60e7881..1868b0cff 100644
+--- a/intg/src/test/python/test_entity.py
++++ b/intg/src/test/python/test_entity.py
+@@ -1,3 +1,22 @@
++#!/usr/bin/env/python
++
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ import time
+ import uuid
+ import pytest
+diff --git a/intg/src/test/python/test_glossary.py b/intg/src/test/python/test_glossary.py
+index 7c5e8d1a4..c787e9fb1 100644
+--- a/intg/src/test/python/test_glossary.py
++++ b/intg/src/test/python/test_glossary.py
+@@ -1,3 +1,22 @@
++#!/usr/bin/env/python
++
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ import uuid
+ import pytest
+ from apache_atlas.client.base_client import AtlasClient
+diff --git a/intg/src/test/python/test_lineage.py b/intg/src/test/python/test_lineage.py
+index fd8dcd6c3..a94e11fec 100644
+--- a/intg/src/test/python/test_lineage.py
++++ b/intg/src/test/python/test_lineage.py
+@@ -1,3 +1,22 @@
++#!/usr/bin/env/python
++
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ import uuid
+ import pytest
+ from apache_atlas.client.base_client import AtlasClient
+diff --git a/intg/src/test/python/test_relationship.py b/intg/src/test/python/test_relationship.py
+index 3955e8cde..93c2e9ef0 100644
+--- a/intg/src/test/python/test_relationship.py
++++ b/intg/src/test/python/test_relationship.py
+@@ -1,3 +1,22 @@
++#!/usr/bin/env/python
++
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ import json
+ import os
+ import sys
+diff --git a/intg/src/test/python/test_typedef.py b/intg/src/test/python/test_typedef.py
+index 7ae4c3ca8..86886b0ef 100644
+--- a/intg/src/test/python/test_typedef.py
++++ b/intg/src/test/python/test_typedef.py
+@@ -1,3 +1,22 @@
++#!/usr/bin/env/python
++
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
+ import uuid
+ import pytest
+ from apache_atlas.client.base_client import AtlasClient
+diff --git a/webapp/pom.xml b/webapp/pom.xml
+index 9f4dc389b..96e0a32fb 100755
+--- a/webapp/pom.xml
++++ b/webapp/pom.xml
+@@ -17,7 +17,6 @@
+   ~ See the License for the specific language governing permissions and
+   ~ limitations under the License.
+   -->
+-
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+ 
+     <modelVersion>4.0.0</modelVersion>
+@@ -772,6 +771,21 @@
+                 <artifactId>exec-maven-plugin</artifactId>
+                 <version>3.0.0</version>
+                 <executions>
++                    <execution>
++                        <configuration>
++                            <executable>pip</executable>
++                            <arguments>
++                                <argument>install</argument>
++                                <argument>pytest</argument>
++                                <argument>apache_atlas</argument>
++                            </arguments>
++                        </configuration>
++                        <id>pytest-install</id>
++                        <phase>integration-test</phase>
++                        <goals>
++                            <goal>exec</goal>
++                        </goals>
++                    </execution>
+                     <execution>
+                         <configuration>
+                             <executable>pytest</executable>
+@@ -866,6 +880,4 @@
+             </plugin>
+         </plugins>
+     </build>
+-
+-
+ </project>
+-- 
+2.17.1
+

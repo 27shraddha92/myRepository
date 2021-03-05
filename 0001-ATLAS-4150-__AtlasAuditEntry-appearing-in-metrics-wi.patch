@@ -1,0 +1,142 @@
+From 71fddab499f74ede198f915b1faf6914e1c18815 Mon Sep 17 00:00:00 2001
+From: Shraddha Chauhan <shraddha.chauhan@freestoneinfotech.com>
+Date: Mon, 1 Mar 2021 12:25:14 +0530
+Subject: [PATCH] ATLAS-4150 __AtlasAuditEntry appearing in metrics window
+
+---
+ .../apache/atlas/services/MetricsService.java | 83 ++++++++++---------
+ .../atlas/services/MetricsServiceTest.java    |  5 +-
+ 2 files changed, 45 insertions(+), 43 deletions(-)
+
+diff --git a/repository/src/main/java/org/apache/atlas/services/MetricsService.java b/repository/src/main/java/org/apache/atlas/services/MetricsService.java
+index e721108d3..44478a864 100644
+--- a/repository/src/main/java/org/apache/atlas/services/MetricsService.java
++++ b/repository/src/main/java/org/apache/atlas/services/MetricsService.java
+@@ -112,51 +112,54 @@ public class MetricsService {
+ 
+         if (entityDefs != null) {
+             for (AtlasEntityDef entityDef : entityDefs) {
+-                long activeCount  = getTypeCount(entityDef.getName(), ACTIVE);
+-                long deletedCount = getTypeCount(entityDef.getName(), DELETED);
+-                long shellCount = getTypeShellCount(entityDef.getName());
+-
+-                if (activeCount > 0) {
+-                    activeEntityCount.put(entityDef.getName(), activeCount);
+-                    totalEntities += activeCount;
+-                }
+-
+-                if (deletedCount > 0) {
+-                    deletedEntityCount.put(entityDef.getName(), deletedCount);
+-                    totalEntities += deletedCount;
+-                }
+-
+-                if (activeCount == 0 && deletedCount == 0) {
+-                    unusedTypeCount++;
+-                }
+-
+-                if (shellCount > 0) {
+-                    shellEntityCount.put(entityDef.getName(), shellCount);
++                AtlasEntityType entityType = typeRegistry.getEntityTypeByName(entityDef.getName());
++                if (!entityType.isInternalType()) {
++                    long activeCount = getTypeCount(entityDef.getName(), ACTIVE);
++                    long deletedCount = getTypeCount(entityDef.getName(), DELETED);
++                    long shellCount = getTypeShellCount(entityDef.getName());
++
++                    if (activeCount > 0) {
++                        activeEntityCount.put(entityDef.getName(), activeCount);
++                        totalEntities += activeCount;
++                    }
++
++                    if (deletedCount > 0) {
++                        deletedEntityCount.put(entityDef.getName(), deletedCount);
++                        totalEntities += deletedCount;
++                    }
++
++                    if (activeCount == 0 && deletedCount == 0) {
++                        unusedTypeCount++;
++                    }
++
++                    if (shellCount > 0) {
++                        shellEntityCount.put(entityDef.getName(), shellCount);
++                    }
+                 }
+             }
+ 
+-
+             for (AtlasEntityDef entityDef : entityDefs) {
+                 AtlasEntityType entityType = typeRegistry.getEntityTypeByName(entityDef.getName());
+-
+-                long entityActiveCount = 0;
+-                long entityDeletedCount = 0;
+-                long entityShellCount = 0;
+-
+-                for (String type : entityType.getTypeAndAllSubTypes()) {
+-                    entityActiveCount += activeEntityCount.get(type) == null ? 0 : activeEntityCount.get(type);
+-                    entityDeletedCount += deletedEntityCount.get(type) == null ? 0 : deletedEntityCount.get(type);
+-                    entityShellCount += shellEntityCount.get(type) == null ? 0 : shellEntityCount.get(type);
+-                }
+-
+-                if (entityActiveCount > 0) {
+-                    activeEntityCountTypeAndSubTypes.put(entityType.getTypeName(), entityActiveCount);
+-                }
+-                if (entityDeletedCount > 0) {
+-                    deletedEntityCountTypeAndSubTypes.put(entityType.getTypeName(), entityDeletedCount);
+-                }
+-                if (entityShellCount > 0) {
+-                    shellEntityCountTypeAndSubTypes.put(entityType.getTypeName(), entityShellCount);
++                if(!entityType.isInternalType()) {
++                    long entityActiveCount = 0;
++                    long entityDeletedCount = 0;
++                    long entityShellCount = 0;
++
++                    for (String type : entityType.getTypeAndAllSubTypes()) {
++                        entityActiveCount += activeEntityCount.get(type) == null ? 0 : activeEntityCount.get(type);
++                        entityDeletedCount += deletedEntityCount.get(type) == null ? 0 : deletedEntityCount.get(type);
++                        entityShellCount += shellEntityCount.get(type) == null ? 0 : shellEntityCount.get(type);
++                    }
++
++                    if (entityActiveCount > 0) {
++                        activeEntityCountTypeAndSubTypes.put(entityType.getTypeName(), entityActiveCount);
++                    }
++                    if (entityDeletedCount > 0) {
++                        deletedEntityCountTypeAndSubTypes.put(entityType.getTypeName(), entityDeletedCount);
++                    }
++                    if (entityShellCount > 0) {
++                        shellEntityCountTypeAndSubTypes.put(entityType.getTypeName(), entityShellCount);
++                    }
+                 }
+             }
+         }
+diff --git a/repository/src/test/java/org/apache/atlas/services/MetricsServiceTest.java b/repository/src/test/java/org/apache/atlas/services/MetricsServiceTest.java
+index bea8eb8b5..040592184 100644
+--- a/repository/src/test/java/org/apache/atlas/services/MetricsServiceTest.java
++++ b/repository/src/test/java/org/apache/atlas/services/MetricsServiceTest.java
+@@ -87,7 +87,6 @@ public class MetricsServiceTest extends AtlasTestBase {
+ 
+     private final Map<String, Long> activeEntityMetricsExpected = new HashMap<String, Long>() {{
+         put("hive_storagedesc", 5L);
+-        put("__ExportImportAuditEntry", 1L);
+         put("AtlasServer", 1L);
+         put("hive_column_lineage", 8L);
+         put("hive_table", 5L);
+@@ -153,7 +152,7 @@ public class MetricsServiceTest extends AtlasTestBase {
+         assertNotNull(metrics);
+ 
+         // general metrics
+-        assertEquals(metrics.getNumericMetric(GENERAL, METRIC_ENTITY_COUNT).intValue(), 43);
++        assertEquals(metrics.getNumericMetric(GENERAL, METRIC_ENTITY_COUNT).intValue(), 42);
+         assertEquals(metrics.getNumericMetric(GENERAL, METRIC_TAG_COUNT).intValue(), 1);
+         assertTrue(metrics.getNumericMetric(GENERAL, METRIC_TYPE_UNUSED_COUNT).intValue() >= 10);
+         assertTrue(metrics.getNumericMetric(GENERAL, METRIC_TYPE_COUNT).intValue() >= 44);
+@@ -164,7 +163,7 @@ public class MetricsServiceTest extends AtlasTestBase {
+         Map deletedEntityMetricsActual = (Map) metrics.getMetric(ENTITY, METRIC_ENTITY_DELETED);
+ 
+         assertEquals(tagMetricsActual.size(), 1);
+-        assertEquals(activeEntityMetricsActual.size(), 8);
++        assertEquals(activeEntityMetricsActual.size(), 7);
+         assertEquals(deletedEntityMetricsActual.size(), 4);
+ 
+         assertEquals(tagMetricsActual, tagMetricsExpected);
+-- 
+2.17.1
+
